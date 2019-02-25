@@ -5,13 +5,14 @@ program T12A
     implicit none !nenhuma variável precisará ser interpretada.
 
     !functions declaration
-    integer ordem
+    integer ordem, counter, four
 
     !should be integer, but it raises errors while dividing a real number
     real fatorial
 
     !variables declaration
-    real*8 x, x0, error, poliTaylor, currentError
+    real*8 x, x0, error, poliTaylor, currentError, modd, taylorReslt        
+    real*8 p_elements(4)
 
     x0 = 0
     ordem = 0
@@ -28,33 +29,11 @@ program T12A
     write(*,*)'digite o ponto a ser aproximado para cos(x) em P(x)'
     read(*,*)x
 
+    currentError = error
+    write(*,*)'currentError, error: (',currentError,error,')'
     !aproximando P(x) a cos(x) até erro ser menor q error
-    currentError = (poliTaylor(x, x0, ordem) - cos(x0))
-    do while (currentError .le. error)
-        write(*,*)'ordem:', ordem
-        write(*,*)'currentError',currentError
-        ordem = ordem + 1
-        currentError = (poliTaylor(x, x0, ordem) - cos(x0))
-    end do
-
-    write(*,*)'grau do polimonio para o erro entrado - ordem:',ordem
-    
-    !modulo(funcao(x) - cos(x)) = erro
-
-    STOP
-    END
-
-    real*8 function poliTaylor(x, x0, ordem)
-        implicit none
-    
-        !auxiliar variable
-        integer modd, four, counter, ordem 
-    
-        !function result
-        real*8 taylorReslt, x, x0
-
-        !elementos que se repetem na aproximação de cos(x) por taylor
-        real*8 p_elements(4)
+    do while (currentError .ge. error)
+        write(*,*)'entrou'
         
         !elements atribuition
         p_elements(1) = +cos(x0)*((x-x0)**(0+ordem))/fatorial(0+ordem)
@@ -73,20 +52,23 @@ program T12A
             !mod(counter,3) - resto da divisão do contador por 3
             !caso counter > 3, então ele repete os elementos
             taylorReslt = taylorReslt + p_elements(modd)  
-            write(*,*)'counter:',counter   
-            write(*,*)'modd:',modd   
-            write(*,*)'taylorReslt:',taylorReslt
-            write(*,*)'ordem', ordem   
-        enddo 
+        enddo
 
-        poliTaylor = taylorReslt
+        currentError = taylorReslt - cos(x0)
+        write(*,*)'currentError: ',currentError
+        ordem = ordem + 1
+    end do
 
-        return
-    end function    
+    write(*,*)'grau do polimonio para o erro entrado - ordem:',ordem
+    
+    !modulo(funcao(x) - cos(x)) = erro
 
-    real function fatorial(n)
+    STOP
+    END
+
+   real function fatorial(n)
         implicit none
-        real n, counter0, fatorialReslt
+        real n, counter0, fatorialReslt, counter1
 
         if (n .eq. 0) then
             fatorial = 1
