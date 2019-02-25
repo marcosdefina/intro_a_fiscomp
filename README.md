@@ -2,7 +2,7 @@
 
 Please run 1-c.exe in the folder that is
 
-(Relatório - T1)[https://pt.overleaf.com/project/5c742fa5cb017557633fcaa4]
+[Relatório - T1](https://pt.overleaf.com/project/5c742fa5cb017557633fcaa4)
 
 Everything above Joanesburgo are markdown tutorial...
 
