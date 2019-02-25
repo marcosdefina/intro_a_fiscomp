@@ -2,16 +2,20 @@ program teste
        !Taylor(x) = sum(i->n){f^i(x-x0)(x-x0)^i/i!}     
         
         !definition of variables
-        integer n, res
+        integer n, res, counter
 
         !definition of funcions
         integer fatorial
 
+        counter = 0
+
         read(*,*)n
 
-        res = fatorial(n)
-
-        write(*,*)res
+        do while(counter < n)
+            counter = counter + 1
+            res = fatorial(counter)
+            write(*,*)res
+        end do
     STOP
     END
 
