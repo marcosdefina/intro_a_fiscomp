@@ -5,10 +5,7 @@ program T12A
     implicit none !nenhuma variável precisará ser interpretada.
 
     !functions declaration
-    integer ordem, counter, four
-
-    !should be integer, but it raises errors while dividing a real number
-    real fatorial
+    integer ordem, counter, four, fatorial
 
     !variables declaration
     real*8 x, x0, error, poliTaylor, currentError, modd, taylorReslt        
@@ -55,7 +52,10 @@ program T12A
         enddo
 
         currentError = taylorReslt - cos(x0)
-        write(*,*)'currentError: ',currentError
+        if(currentError < 0) then
+            currentError = -1*currentError
+        end if
+        write(*,*)'currentError, error: (',currentError,error,')'
         ordem = ordem + 1
     end do
 
@@ -66,9 +66,8 @@ program T12A
     STOP
     END
 
-   real function fatorial(n)
-        implicit none
-        real n, counter0, fatorialReslt, counter1
+   integer function fatorial(n)
+        integer n, counter0, fatorialReslt, counter1
 
         if (n .eq. 0) then
             fatorial = 1

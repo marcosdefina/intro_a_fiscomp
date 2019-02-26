@@ -9,7 +9,7 @@ program fatorial
     counter0 = 1
 
     !search for pi truncate place at real*8    
-    pi = 3.141592653589793238462643383279
+    pi = 3.141592653589793238462643383279d0
 
     !opening 1-b file to compare result
     open(1, file = '../1-b/1-b.dat', status = 'old')
